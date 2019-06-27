@@ -1,0 +1,25 @@
+package dao;
+
+public class UserDAO {
+	public int getTotal(){
+
+	}
+	public void delete(int aid){
+
+	}
+	public void add(Answer bean){
+
+	}
+	public void update(Answer bean){
+
+	}
+	public Answer get(int aid){
+
+	}
+	public List<Answer> list(int start, int count){
+
+	}
+	public List<Answer> list(){
+		
+	}
+}

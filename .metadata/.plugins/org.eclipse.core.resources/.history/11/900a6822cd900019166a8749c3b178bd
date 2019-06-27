@@ -1,0 +1,70 @@
+package dao;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+
+import com.mysql.jdbc.PreparedStatement;
+import com.mysql.jdbc.Statement;
+
+import entity.User;
+import util.DBUtil;
+
+public class UserDAO {
+	public int getTotal(){
+		int total = 0;
+		try(Connection c = DBUtil.getConnection(); Statement s = c.createStatement();){
+			String sql = "select count(*) from user";
+			ResultSet rs = s.executeQuery(sql);
+			if(rs.next()){
+				total = rs.getInt(1);
+			}
+		}catch(SQLException e){
+			e.printStacktrace();
+		}
+		return total;
+	}
+	public void update(User bean){
+		String sql = "update user set userName = ?, userPassword = ? where userId = ?";
+		try(Connection c = DBUtil.getConnection(); PreparedStatement ps = c.prepareStatement(sql);){
+			ps.setString(1, bean.getUserName());
+			ps.setString(2, bean.getUserPassword());
+			ps.setInt(3, bean.getUserId());
+			ps.execute();
+		}catch(SQLException e){
+			e.printStacktrace();
+		}
+	}
+	public void delete(int userId){
+		try(Connection c = DBUtil.getConnection(); Statement s = c.createStatement();){
+			String sql = "delete from user where userId = "+userId;
+			s.execute(sql);
+		}catch(SQLException e){
+			e.printStacktrace();
+		}
+	}
+	public void add(User bean){
+		String sql = "insert into user values(null,?,?)";
+		try(Connection c = DBUtil.getConnection(); PreparedStatement ps = c.prepareStatement(sql);){
+			ps.setString(1, bean.getUserName());
+			ps.setString(2, bean.getUserPassword());
+			ResultSet rs = ps.getGeneratedKeys();
+			if(rs.next()){
+				int userId = rs.getInt("userId");
+				bean.setUserId(userId);
+			}
+		}catch(SQLException e){
+			e.printStacktrace();
+		}
+	}
+	public User get(int userId){
+
+	}
+	public List<User> list(int start, int count){
+
+	}
+	public List<User> list(){
+		return list();
+	}
+}

@@ -1,0 +1,19 @@
+package dao;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+
+import util.DBUtil;
+
+public class Answer {
+	public int getTotal(){
+		int total = 0;
+		try(Connection c = DBUtil.getConnection(); Statement s = c.createStatement();){
+			
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+	}
+}

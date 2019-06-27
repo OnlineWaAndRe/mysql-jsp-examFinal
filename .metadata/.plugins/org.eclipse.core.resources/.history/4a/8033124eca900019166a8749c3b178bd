@@ -1,0 +1,20 @@
+package util;
+
+import java.sql.DriverManager;
+
+public class DBUtil {
+	public static String url = "mysql:jdbc://localhost:3306/exam";
+	public static String driver = "com.mysql.jdbc.Driver";
+	public static String userName = "root";
+	public static String userPassword = "123456";
+	static{
+		try {
+			Class.forName(driver);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+	public static Connection getConnection(){
+		return DriverManager.getConnection(url,userName,userPassword);
+	}
+}

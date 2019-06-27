@@ -1,0 +1,63 @@
+package dao;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
+import com.mysql.jdbc.PreparedStatement;
+
+import entity.Result;
+import util.DBUtil;
+
+public class ResultDAO {
+	public int getTotal(){
+		int total = 0;
+		try(Connection c = DBUtil.getConnection(); Statement s = c.createStatement();){
+			String sql = "select count(*) from result";
+			ResultSet rs = s.executeQuery(sql);
+			if(rs.next()){
+				total = rs.getInt(1);
+			}
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+		return total;
+	}
+	public void delete(int rid){
+		try(Connection c = DBUtil.getConnection(); Statement s = c.createStatement()){
+			String sql = "delete from result where id = "+rid;
+			s.execute(sql);
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+	}
+	public void update(Result bean){
+		String sql = "update result set uid = ?, qid = ?, aid = ? where resultid = ?";
+		try(Connection c = DBUtil.getConnection(); PreparedStatement ps = (PreparedStatement) c.prepareStatement(sql);){
+			ps.setInt(1,bean.getUid());
+			ps.setInt(2,bean.getQid());
+			ps.setInt(3,bean.getAid());
+			ps.setInt(4,bean.getResultId());
+			ps.execute();
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+	}
+	public void add(Result bean){
+		String sql = "insert into result values(null,?,?,?,)";
+		try(Connection c = DBUtil.getConnection(); PreparedStatement ps = (PreparedStatement) c.prepareStatement(sql);){
+			ps.setInt(1, bean.getUid());
+			ps.setInt(2, bean.getQid());
+			ps.setInt(3, bean.getAid());
+			ps.execute();
+			ResultSet rs = ps.getGenereKeys();
+			if(rs.next()){
+				int resultid = rs.getInt(1);
+				bean.setResultId(resultid);
+			}
+		}catch(SQLException e){
+			e.printStackTrace();
+		}
+	}
+}

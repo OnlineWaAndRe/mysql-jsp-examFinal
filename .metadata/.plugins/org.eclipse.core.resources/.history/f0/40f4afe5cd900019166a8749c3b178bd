@@ -1,0 +1,37 @@
+package entity;
+
+public class Result {
+	private int resultId;
+	private String uid;
+	private String qid;
+	private String aid;
+	public int getResultId() {
+		return resultId;
+	}
+	public void setResultId(int resultId) {
+		this.resultId = resultId;
+	}
+	public String getUid() {
+		return uid;
+	}
+	public void setUid(String uid) {
+		this.uid = uid;
+	}
+	public String getQid() {
+		return qid;
+	}
+	public void setQid(String qid) {
+		this.qid = qid;
+	}
+	public String getAid() {
+		return aid;
+	}
+	public void setAid(String aid) {
+		this.aid = aid;
+	}
+	@Override
+	public String toString() {
+		return "Result [resultId=" + resultId + ", uid=" + uid + ", qid=" + qid + ", aid=" + aid + "]";
+	}
+	
+}

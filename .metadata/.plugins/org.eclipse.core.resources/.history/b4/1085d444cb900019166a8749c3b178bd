@@ -1,0 +1,6 @@
+package entity;
+
+public class Answer {
+	private int answerId;
+	private String answerContent;
+}
